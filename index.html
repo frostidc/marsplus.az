@@ -1,1212 +1,330 @@
-/* ================================
-   Mars Algoritmika - Styles
-   Azerbaijani Educational Platform
-   ================================ */
-
-/* CSS Variables */
-:root {
-    --primary-color: #e63946;
-    --primary-dark: #c1121f;
-    --secondary-color: #1d3557;
-    --accent-color: #457b9d;
-    --bg-color: #0a0a0f;
-    --bg-secondary: #12121a;
-    --bg-card: #1a1a24;
-    --text-primary: #f1faee;
-    --text-secondary: #a8dadc;
-    --text-muted: #6c757d;
-    --border-color: #2d2d3a;
-    --success-color: #2ecc71;
-    --error-color: #e74c3c;
-    --warning-color: #f39c12;
-    --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    --transition: all 0.3s ease;
-    --glow: 0 0 20px rgba(230, 57, 70, 0.3);
-}
-
-/* Light Mode Variables */
-[data-theme="light"] {
-    --bg-color: #f8f9fa;
-    --bg-secondary: #ffffff;
-    --bg-card: #ffffff;
-    --text-primary: #1a1a2e;
-    --text-secondary: #4a4a6a;
-    --border-color: #e0e0e0;
-    --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    --glow: 0 0 20px rgba(230, 57, 70, 0.2);
-}
-
-/* Reset & Base */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-primary);
-    min-height: 100vh;
-    transition: var(--transition);
-    overflow-x: hidden;
-}
-
-/* Background Effect */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        radial-gradient(ellipse at 20% 20%, rgba(230, 57, 70, 0.1) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(69, 123, 157, 0.1) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(29, 53, 87, 0.05) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: -1;
-}
-
-/* Entrance Animation Overlay */
-#entrance-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-    transition: opacity 1s ease, visibility 1s ease;
-}
-
-#entrance-overlay.hidden {
-    opacity: 0;
-    visibility: hidden;
-}
-
-.galactic-text {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(2rem, 8vw, 6rem);
-    color: var(--primary-color);
-    text-shadow: var(--glow);
-    letter-spacing: 0.3em;
-    animation: galacticPulse 0.5s infinite alternate;
-}
-
-@keyframes galacticPulse {
-    0% {
-        text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
-        transform: scale(1);
-    }
-    100% {
-        text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color), 0 0 60px var(--accent-color);
-        transform: scale(1.02);
-    }
-}
-
-/* Navigation */
-.main-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: rgba(10, 10, 15, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border-color);
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 1000;
-    transition: var(--transition);
-}
-
-[data-theme="light"] .main-nav {
-    background: rgba(255, 255, 255, 0.95);
-    border-bottom: 1px solid var(--border-color);
-}
-
-.nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.logo-icon {
-    font-size: 2rem;
-    animation: planetRotate 10s linear infinite;
-}
-
-@keyframes planetRotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-.logo-text {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.nav-tabs {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-}
-
-.nav-tab {
-    background: transparent;
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: var(--transition);
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.nav-tab:hover {
-    background: var(--bg-card);
-    border-color: var(--primary-color);
-    color: var(--text-primary);
-}
-
-.nav-tab.active {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-    color: white;
-}
-
-/* Login Navigation Button */
-.login-nav-btn {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)) !important;
-    margin-left: 0.5rem;
-    border: none !important;
-}
-
-.login-nav-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
-}
-
-/* Ad Banner Styles */
-.ad-banner {
-    background: var(--bg-secondary);
-    padding: 10px;
-    text-align: center;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.ad-container {
-    max-width: 100%;
-    margin: 0 auto;
-    display: inline-block;
-}
-
-.ad-container a {
-    display: block;
-}
-
-.ad-container img {
-    display: block;
-    max-height: 90px;
-}
-
-/* Main Content */
-#main-content {
-    padding-top: 110px;
-    padding-bottom: 80px;
-    min-height: calc(100vh - 190px);
-}
-
-.tab-content {
-    display: none;
-    animation: fadeIn 0.4s ease;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Hero Section */
-.hero-section {
-    text-align: center;
-    padding: 3rem 1rem;
-    margin-bottom: 2rem;
-}
-
-.hero-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(2rem, 6vw, 4rem);
-    font-weight: 900;
-    color: var(--primary-color);
-    text-shadow: var(--glow);
-    margin-bottom: 1rem;
-    animation: titleGlow 2s ease-in-out infinite alternate;
-}
-
-@keyframes titleGlow {
-    from { text-shadow: 0 0 20px rgba(230, 57, 70, 0.5); }
-    to { text-shadow: 0 0 40px rgba(230, 57, 70, 0.8), 0 0 60px rgba(69, 123, 157, 0.4); }
-}
-
-.hero-subtitle {
-    font-size: 1.25rem;
-    color: var(--text-secondary);
-    font-weight: 300;
-}
-
-/* Section Labels */
-.section-label {
-    display: block;
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--text-primary);
-    margin-bottom: 0.75rem;
-}
-
-.section-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.75rem;
-    color: var(--text-primary);
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
-/* Class & Module Selection */
-.class-selection,
-.module-selection,
-.search-section {
-    max-width: 600px;
-    margin: 0 auto 2rem;
-    padding: 0 1rem;
-}
-
-.class-dropdown,
-.module-dropdown,
-.admin-input,
-.search-input {
-    width: 100%;
-    padding: 1rem 1.25rem;
-    background: var(--bg-card);
-    border: 2px solid var(--border-color);
-    border-radius: 12px;
-    color: var(--text-primary);
-    font-size: 1rem;
-    font-family: 'Roboto', sans-serif;
-    transition: var(--transition);
-    cursor: pointer;
-}
-
-.class-dropdown:focus,
-.module-dropdown:focus,
-.admin-input:focus,
-.search-input:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: var(--glow);
-}
-
-.class-dropdown option,
-.module-dropdown option {
-    background: var(--bg-card);
-    color: var(--text-primary);
-}
-
-/* Search Container */
-.search-container {
-    position: relative;
-}
-
-.search-icon {
-    position: absolute;
-    left: 1.25rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-muted);
-}
-
-.search-input {
-    padding-left: 3rem;
-}
-
-/* Questions List */
-.questions-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-.questions-list {
-    display: grid;
-    gap: 1rem;
-}
-
-.question-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 1.25rem;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.question-card:hover {
-    border-color: var(--primary-color);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow);
-}
-
-.question-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-}
-
-.question-number {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--primary-color);
-}
-
-.question-badge {
-    background: var(--accent-color);
-    color: white;
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 500;
-}
-
-.question-text {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    line-height: 1.5;
-}
-
-/* Answer Display */
-.answer-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-.back-btn {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: var(--transition);
-    font-family: 'Roboto', sans-serif;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.back-btn:hover {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-}
-
-.answer-content {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 2rem;
-}
-
-.answer-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.answer-question {
-    font-size: 1.1rem;
-    color: var(--text-primary);
-}
-
-.answer-type-badge {
-    background: var(--success-color);
-    color: white;
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-}
-
-.answer-body {
-    margin-bottom: 1.5rem;
-}
-
-.answer-text {
-    color: var(--text-secondary);
-    line-height: 1.7;
-    font-size: 1rem;
-}
-
-.answer-media {
-    max-width: 100%;
-    border-radius: 8px;
-    margin: 1rem 0;
-}
-
-.answer-video {
-    width: 100%;
-    max-width: 600px;
-    border-radius: 8px;
-    margin: 1rem 0;
-}
-
-.answer-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--accent-color);
-    text-decoration: none;
-    padding: 0.75rem 1.25rem;
-    background: rgba(69, 123, 157, 0.1);
-    border-radius: 8px;
-    transition: var(--transition);
-}
-
-.answer-link:hover {
-    background: rgba(69, 123, 157, 0.2);
-    transform: translateY(-2px);
-}
-
-/* Code Display */
-.code-block {
-    position: relative;
-    background: #1e1e2e;
-    border-radius: 8px;
-    margin: 1rem 0;
-    overflow: hidden;
-}
-
-.code-block pre {
-    padding: 1.25rem;
-    overflow-x: auto;
-    margin: 0;
-}
-
-.code-block code {
-    font-family: 'Consolas', 'Monaco', monospace;
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: #cdd6f4;
-}
-
-.copy-btn {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: #cdd6f4;
-    padding: 0.5rem 0.75rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: var(--transition);
-    font-size: 0.85rem;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-}
-
-.copy-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.copy-btn.copied {
-    background: var(--success-color);
-    color: white;
-}
-
-/* Coming Soon Section */
-.coming-soon {
-    text-align: center;
-    padding: 4rem 1rem;
-}
-
-.coming-soon-icon {
-    font-size: 5rem;
-    margin-bottom: 2rem;
-    animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
-}
-
-.coming-soon-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 3rem;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-}
-
-.coming-soon-text {
-    font-size: 1.5rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.5rem;
-}
-
-.coming-soon-subtext {
-    color: var(--text-muted);
-}
-
-/* Share Section */
-.share-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-    text-align: center;
-}
-
-.share-description {
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
-    line-height: 1.6;
-}
-
-.share-link-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-    color: white;
-    text-decoration: none;
-    padding: 1rem 2rem;
-    border-radius: 12px;
-    font-size: 1.1rem;
-    font-weight: 500;
-    transition: var(--transition);
-    box-shadow: var(--shadow);
-}
-
-.share-link-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(230, 57, 70, 0.4);
-}
-
-.share-info {
-    margin-top: 2rem;
-    text-align: left;
-    background: var(--bg-card);
-    padding: 1.5rem;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-}
-
-.share-info p {
-    color: var(--text-primary);
-    font-weight: 500;
-    margin-bottom: 0.75rem;
-}
-
-.share-info ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.share-info li {
-    color: var(--text-secondary);
-    padding: 0.4rem 0;
-    padding-left: 1.5rem;
-    position: relative;
-}
-
-.share-info li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    color: var(--success-color);
-}
-
-/* Admin Section */
-.admin-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-}
-
-.admin-login {
-    max-width: 400px;
-    margin: 3rem auto;
-    text-align: center;
-}
-
-.login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.login-form .admin-input {
-    text-align: center;
-}
-
-.admin-btn {
-    background: var(--primary-color);
-    border: none;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: var(--transition);
-    font-family: 'Roboto', sans-serif;
-    font-size: 1rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-}
-
-.admin-btn:hover {
-    background: var(--primary-dark);
-    transform: translateY(-2px);
-}
-
-.logout-btn {
-    background: var(--text-muted);
-}
-
-.dark-mode-btn {
-    background: var(--accent-color);
-}
-
-.error-message {
-    color: var(--error-color);
-    margin-top: 1rem;
-    font-size: 0.9rem;
-}
-
-.admin-dashboard {
-    animation: fadeIn 0.4s ease;
-}
-
-.admin-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.admin-form-section,
-.admin-questions-section {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-}
-
-.admin-form-section h3,
-.admin-questions-section h3 {
-    font-family: 'Orbitron', sans-serif;
-    color: var(--text-primary);
-    margin-bottom: 1.5rem;
-}
-
-.form-group {
-    margin-bottom: 1.25rem;
-}
-
-.form-group label {
-    display: block;
-    color: var(--text-secondary);
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-}
-
-.admin-textarea {
-    width: 100%;
-    padding: 1rem;
-    background: var(--bg-secondary);
-    border: 2px solid var(--border-color);
-    border-radius: 8px;
-    color: var(--text-primary);
-    font-size: 1rem;
-    font-family: 'Roboto', sans-serif;
-    transition: var(--transition);
-    resize: vertical;
-}
-
-.admin-textarea:focus {
-    outline: none;
-    border-color: var(--primary-color);
-}
-
-.code-input {
-    font-family: 'Consolas', 'Monaco', monospace;
-}
-
-.save-btn {
-    width: 100%;
-    margin-top: 1rem;
-}
-
-.admin-filters {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-}
-
-.admin-questions-list {
-    display: grid;
-    gap: 1rem;
-}
-
-.admin-question-card {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.admin-question-info h4 {
-    color: var(--text-primary);
-    margin-bottom: 0.25rem;
-}
-
-.admin-question-info p {
-    color: var(--text-muted);
-    font-size: 0.85rem;
-}
-
-.admin-question-actions {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.admin-question-actions button {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
-    padding: 0.5rem 0.75rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.admin-question-actions button:hover {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-}
-
-.admin-question-actions .delete-btn:hover {
-    border-color: var(--error-color);
-    color: var(--error-color);
-}
-
-/* Footer */
-.main-footer {
-    background: var(--bg-secondary);
-    border-top: 1px solid var(--border-color);
-    padding: 1.5rem;
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 0.9rem;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .main-nav {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
-    }
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mars Algoritmika</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Entrance Animation Overlay -->
+    <div id="entrance-overlay">
+        <div class="galactic-text" id="galactic-text"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-logo">
+            <span class="logo-icon">🪐</span>
+            <span class="logo-text">Mars Algoritmika</span>
+        </div>
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-tab="home" onclick="switchTab('home')">
+                <i class="fas fa-home"></i> Ana Səhifə
+            </button>
+            <button class="nav-tab" data-tab="mars-plus" onclick="switchTab('mars-plus')">
+                <i class="fas fa-plus-circle"></i> Mars+
+            </button>
+            <button class="nav-tab" data-tab="share" onclick="switchTab('share')">
+                <i class="fas fa-share-alt"></i> Paylaş
+            </button>
+            <button class="nav-tab login-nav-btn" onclick="openLoginModal()">
+                <i class="fas fa-sign-in-alt"></i> Daxil ol
+            </button>
+        </div>
+    </nav>
+
+    <!-- Reklam Banner -->
+    <div class="ad-banner" id="ad-banner">
+        <div class="ad-container">
+            <!-- AdFocus Banner - Replace with your banner code -->
+            <a href="https://adfoc.us/8753751" target="_blank">
+                <img src="https://via.placeholder.com/728x90/1a1a2e/ff6b6b?text=Reklam+Buraya" alt="Reklam" style="max-width:100%; height:auto;">
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Home Section -->
+        <section id="home-section" class="tab-content active">
+            <div class="hero-section">
+                <h1 class="hero-title">Mars Algoritmika</h1>
+                <p class="hero-subtitle">Algoritmik düşüncəni inkişaf etdir</p>
+            </div>
+
+            <!-- Class Selection -->
+            <div class="class-selection">
+                <label for="class-select" class="section-label">Sinifini seç:</label>
+                <select id="class-select" class="class-dropdown" onchange="loadModules()">
+                    <option value="">-- Sinif seç --</option>
+                    <option value="7">7-ci sinif</option>
+                    <option value="8">8-ci sinif</option>
+                    <option value="9">9-cu sinif</option>
+                    <option value="10">10-cu sinif</option>
+                    <option value="11">11-ci sinif</option>
+                </select>
+            </div>
+
+            <!-- Module Selection -->
+            <div class="module-selection" id="module-selection" style="display: none;">
+                <label for="module-select" class="section-label">Modulu seç:</label>
+                <select id="module-select" class="module-dropdown" onchange="loadQuestions()">
+                    <option value="">-- Modul seç --</option>
+                    <option value="1">Modul 1</option>
+                    <option value="2">Modul 2</option>
+                    <option value="3">Modul 3</option>
+                    <option value="4">Modul 4</option>
+                    <option value="5">Modul 5</option>
+                    <option value="6">Modul 6</option>
+                </select>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-section" id="search-section" style="display: none;">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="search-input" class="search-input" 
+                           placeholder="Sual № və ya açar sözlə axtar..." 
+                           oninput="searchQuestions()">
+                </div>
+            </div>
+
+            <!-- Questions List -->
+            <div class="questions-container" id="questions-container" style="display: none;">
+                <h2 class="section-title">Suallar</h2>
+                <div id="questions-list" class="questions-list"></div>
+            </div>
+
+            <!-- Answer Display -->
+            <div class="answer-container" id="answer-container" style="display: none;">
+                <button class="back-btn" onclick="hideAnswer()">
+                    <i class="fas fa-arrow-left"></i> Geri
+                </button>
+                <div id="answer-content" class="answer-content"></div>
+            </div>
+        </section>
+
+        <!-- Mars+ Section -->
+        <section id="mars-plus-section" class="tab-content">
+            <div class="coming-soon">
+                <div class="coming-soon-icon">🚀</div>
+                <h2 class="coming-soon-title">Mars+</h2>
+                <p class="coming-soon-text">Yaxında...</p>
+                <p class="coming-soon-subtext">Biz sizin üçün yeni imkanlar hazırlayırıq!</p>
+            </div>
+        </section>
+
+        <!-- Share Section -->
+        <section id="share-section" class="tab-content">
+            <div class="share-container">
+                <h2 class="section-title">Sual və ya Cavab Paylaş</h2>
+                <p class="share-description">Öz sualını və ya cavabını bizimlə paylaşmaq üçün aşağıdakı formaya keçid edin:</p>
+                <a href="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform" 
+                   target="_blank" 
+                   class="share-link-btn">
+                    <i class="fas fa-external-link-alt"></i> Formaya keçid
+                </a>
+                <div class="share-info">
+                    <p>📝 Form vasitəsilə:</p>
+                    <ul>
+                        <li>Sual göndərə bilərsiniz</li>
+                        <li>Cavab təklif edə bilərsiniz</li>
+                        <li>Texniki problem bildirə bilərsiniz</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Section -->
+        <section id="admin-section" class="tab-content">
+            <div class="admin-container">
+                <h2 class="section-title">Admin Panel</h2>
+                
+                <!-- Login Form -->
+                <div id="admin-login" class="admin-login">
+                    <div class="login-form">
+                        <input type="password" id="admin-password" placeholder="Parol" class="admin-input">
+                        <button onclick="adminLogin()" class="admin-btn">
+                            <i class="fas fa-sign-in-alt"></i> Daxil ol
+                        </button>
+                    </div>
+                    <p id="login-error" class="error-message"></p>
+                </div>
+
+                <!-- Admin Dashboard -->
+                <div id="admin-dashboard" class="admin-dashboard" style="display: none;">
+                    <div class="admin-header">
+                        <button onclick="adminLogout()" class="admin-btn logout-btn">
+                            <i class="fas fa-sign-out-alt"></i> Çıxış
+                        </button>
+                        <button onclick="toggleDarkMode()" class="admin-btn dark-mode-btn">
+                            <i class="fas fa-moon"></i> Qaranlıq Rejim
+                        </button>
+                    </div>
+
+                    <!-- Add/Edit Question Form -->
+                    <div class="admin-form-section">
+                        <h3>Sual/Cavab Əlavə et</h3>
+                        <div class="form-group">
+                            <label>Sinif:</label>
+                            <select id="admin-class" class="admin-input">
+                                <option value="7">7-ci sinif</option>
+                                <option value="8">8-ci sinif</option>
+                                <option value="9">9-cu sinif</option>
+                                <option value="10">10-cu sinif</option>
+                                <option value="11">11-ci sinif</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Modul:</label>
+                            <select id="admin-module" class="admin-input">
+                                <option value="1">Modul 1</option>
+                                <option value="2">Modul 2</option>
+                                <option value="3">Modul 3</option>
+                                <option value="4">Modul 4</option>
+                                <option value="5">Modul 5</option>
+                                <option value="6">Modul 6</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Sual №:</label>
+                            <input type="number" id="admin-question-num" class="admin-input" placeholder="Məs: 5">
+                        </div>
+                        <div class="form-group">
+                            <label>Sual (Mətn):</label>
+                            <textarea id="admin-question-text" class="admin-textarea" rows="3" placeholder="Sualın mətni..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Cavab Növü:</label>
+                            <select id="admin-answer-type" class="admin-input" onchange="toggleAnswerFields()">
+                                <option value="text">Mətn</option>
+                                <option value="code">Kod (Python)</option>
+                                <option value="image">Şəkil</option>
+                                <option value="video">Video</option>
+                                <option value="link">Link</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="text-answer-group">
+                            <label>Cavab (Mətn):</label>
+                            <textarea id="admin-answer-text" class="admin-textarea" rows="4" placeholder="Cavabın mətni..."></textarea>
+                        </div>
+                        <div class="form-group" id="code-answer-group" style="display: none;">
+                            <label>Cavab (Kod):</label>
+                            <textarea id="admin-answer-code" class="admin-textarea code-input" rows="6" placeholder="Python kodu..."></textarea>
+                        </div>
+                        <div class="form-group" id="media-answer-group" style="display: none;">
+                            <label>Media URL:</label>
+                            <input type="url" id="admin-answer-media" class="admin-input" placeholder="Şəkil/Video URL">
+                        </div>
+                        <div class="form-group" id="link-answer-group" style="display: none;">
+                            <label>Link:</label>
+                            <input type="url" id="admin-answer-link" class="admin-input" placeholder="https://...">
+                        </div>
+                        <div class="form-group">
+                            <label>Admin Qeyd (isteğe bağlı):</label>
+                            <input type="text" id="admin-note" class="admin-input" placeholder="Daxili qeyd">
+                        </div>
+                        <button onclick="saveQuestion()" class="admin-btn save-btn">
+                            <i class="fas fa-save"></i> Yadda saxla
+                        </button>
+                    </div>
+
+                    <!-- Questions List -->
+                    <div class="admin-questions-section">
+                        <h3>Mövcud Suallar</h3>
+                        <div class="admin-filters">
+                            <select id="admin-filter-class" class="admin-input" onchange="loadAdminQuestions()">
+                                <option value="">Bütün siniflər</option>
+                                <option value="7">7-ci sinif</option>
+                                <option value="8">8-ci sinif</option>
+                                <option value="9">9-cu sinif</option>
+                                <option value="10">10-cu sinif</option>
+                                <option value="11">11-ci sinif</option>
+                            </select>
+                            <button onclick="loadAdminQuestions()" class="admin-btn">
+                                <i class="fas fa-filter"></i> Filter
+                            </button>
+                        </div>
+                        <div id="admin-questions-list" class="admin-questions-list"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <p>&copy; 2024 Mars Algoritmika. Bütün hüquqlar qorunur.</p>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
     
-    .nav-tabs {
-        width: 100%;
-        justify-content: center;
-    }
-    
-    .nav-tab {
-        padding: 0.5rem 0.75rem;
-        font-size: 0.8rem;
-    }
-    
-    .nav-tab i {
-        display: none;
-    }
-    
-    #main-content {
-        padding-top: 160px;
-    }
-    
-    .hero-title {
-        font-size: 2rem;
-    }
-    
-    .admin-header {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
-    .admin-header .admin-btn {
-        width: 100%;
-        justify-content: center;
-    }
-    
-    .admin-filters {
-        flex-direction: column;
-    }
-    
-    .admin-filters .admin-input,
-    .admin-filters .admin-btn {
-        width: 100%;
-    }
-}
+    <!-- App Scripts -->
+    <script src="firebase-config.js"></script>
+    <script src="app.js"></script>
 
-/* Scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
+    <!-- AdFocus Script - Replace with your actual code -->
+    <script src="//adfoc.us/serve/script/8753751.js"></script>
 
-::-webkit-scrollbar-track {
-    background: var(--bg-secondary);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--border-color);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--text-muted);
-}
-
-/* Selection */
-::selection {
-    background: var(--primary-color);
-    color: white;
-}
-
-/* =================================
-   Login Modal Styles
-   ================================ */
-
-.login-modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(5px);
-    animation: fadeIn 0.3s ease;
-}
-
-.login-modal-content {
-    background-color: var(--bg-card);
-    margin: 10% auto;
-    padding: 2.5rem;
-    border-radius: 16px;
-    border: 1px solid var(--border-color);
-    max-width: 450px;
-    width: 90%;
-    position: relative;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    animation: slideIn 0.3s ease;
-}
-
-@keyframes slideIn {
-    from {
-        transform: translateY(-30px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.login-close {
-    color: var(--text-muted);
-    position: absolute;
-    top: 1rem;
-    right: 1.5rem;
-    font-size: 2rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: var(--transition);
-    line-height: 1;
-}
-
-.login-close:hover {
-    color: var(--primary-color);
-}
-
-.login-header {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.login-icon {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-}
-
-.login-header h2 {
-    font-family: 'Orbitron', sans-serif;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
-    font-size: 1.5rem;
-}
-
-.login-header p {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-}
-
-.login-step {
-    margin-bottom: 1.5rem;
-}
-
-.login-step .form-group {
-    margin-bottom: 1.5rem;
-}
-
-.login-step label {
-    display: block;
-    color: var(--text-secondary);
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-}
-
-.login-input {
-    width: 100%;
-    padding: 1rem;
-    background: var(--bg-secondary);
-    border: 2px solid var(--border-color);
-    border-radius: 8px;
-    color: var(--text-primary);
-    font-size: 1rem;
-    transition: var(--transition);
-    box-sizing: border-box;
-}
-
-.login-input:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
-}
-
-.login-input::placeholder {
-    color: var(--text-muted);
-}
-
-.login-btn {
-    width: 100%;
-    padding: 1rem;
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-size: 1.1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-}
-
-.login-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(230, 57, 70, 0.4);
-}
-
-.login-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.login-btn.secondary {
-    background: var(--bg-secondary);
-    border: 2px solid var(--border-color);
-    color: var(--text-primary);
-}
-
-.login-btn.secondary:hover {
-    border-color: var(--primary-color);
-    background: var(--bg-secondary);
-    box-shadow: none;
-}
-
-.login-info {
-    margin-top: 1.5rem;
-    padding: 1rem;
-    background: rgba(69, 123, 157, 0.1);
-    border-radius: 8px;
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-    display: flex;
-    align-items: flex-start;
-    gap: 0.5rem;
-    line-height: 1.5;
-}
-
-.login-info i {
-    color: var(--accent-color);
-    margin-top: 2px;
-}
-
-.login-success {
-    text-align: center;
-    padding: 1rem 0;
-}
-
-.login-success i {
-    font-size: 4rem;
-    color: var(--success-color);
-    margin-bottom: 1rem;
-}
-
-.login-success h3 {
-    color: var(--success-color);
-    margin-bottom: 0.5rem;
-    font-size: 1.3rem;
-}
-
-.login-success p {
-    color: var(--text-secondary);
-    margin-bottom: 1.5rem;
-}
-
-.login-error {
-    margin-top: 1rem;
-    padding: 1rem;
-    background: rgba(220, 53, 69, 0.1);
-    border: 1px solid var(--error-color);
-    border-radius: 8px;
-    color: var(--error-color);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-}
-
-.login-error i {
-    font-size: 1.2rem;
-}
-
-.login-loading {
-    text-align: center;
-    padding: 2rem;
-}
-
-.login-loading .spinner {
-    border: 4px solid var(--bg-secondary);
-    border-top: 4px solid var(--primary-color);
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 1rem;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.login-loading p {
-    color: var(--text-secondary);
-}
-
-/* Notification Styles */
-.notification {
-    position: fixed;
-    top: 2rem;
-    right: 2rem;
-    padding: 1rem 1.5rem;
-    border-radius: 8px;
-    color: white;
-    font-weight: 500;
-    z-index: 10000;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    transform: translateX(120%);
-    transition: transform 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
-
-.notification.show {
-    transform: translateX(0);
-}
-
-.notification-success {
-    background: linear-gradient(135deg, #28a745, #20c997);
-}
-
-.notification-error {
-    background: linear-gradient(135deg, #dc3545, #e74c3c);
-}
-
-.notification-info {
-    background: linear-gradient(135deg, #17a2b8, #6f42c1);
-}
-
-/* Responsive Modal */
-@media (max-width: 500px) {
-    .login-modal-content {
-        margin: 20% auto;
-        padding: 1.5rem;
-    }
-    
-    .login-header h2 {
-        font-size: 1.3rem;
-    }
-    
-    .login-icon {
-        font-size: 2.5rem;
-    }
-}
+    <!-- Login Modal -->
+    <div id="login-modal" class="login-modal">
+        <div class="login-modal-content">
+            <span class="login-close" onclick="closeLoginModal()">&times;</span>
+            <div class="login-header">
+                <div class="login-icon">🔐</div>
+                <h2>Daxil ol / Qeydiyyat</h2>
+                <p>Emailinizi daxil edin və sistemə qoşulun</p>
+            </div>
+            
+            <!-- Step 1: Email Input -->
+            <div id="login-step-1" class="login-step">
+                <div class="form-group">
+                    <label for="user-email">Email ünvanı:</label>
+                    <input type="email" id="user-email" class="login-input" 
+                           placeholder="nümunə@gmail.com" required>
+                </div>
+                <button onclick="sendLoginLink()" class="login-btn" id="send-link-btn">
+                    <i class="fas fa-paper-plane"></i> Daxil olma linki göndər
+                </button>
+                <p class="login-info">
+                    <i class="fas fa-info-circle"></i>
+                    Emailinize daxil olma linki göndəriləcək. Linkə klik edərək avtomatik daxil olacaqsınız.
+                </p>
+            </div>
+            
+            <!-- Step 2: Success Message -->
+            <div id="login-step-2" class="login-step" style="display: none;">
+                <div class="login-success">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Link göndərildi!</h3>
+                    <p>Emailinizi yoxlayın və göndərilən linkə klik edin.</p>
+                    <button onclick="resetLoginModal()" class="login-btn secondary">
+                        <i class="fas fa-arrow-left"></i> Geri
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Error Message -->
+            <div id="login-error" class="login-error" style="display: none;">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="login-error-text"></span>
+            </div>
+            
+            <!-- Loading Spinner -->
+            <div id="login-loading" class="login-loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Gözləyin...</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

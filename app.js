@@ -110,7 +110,10 @@ function switchTab(tabName) {
     document.querySelectorAll('.nav-tab').forEach(tab => {
         tab.classList.remove('active');
     });
-    document.querySelector('[data-tab="' + tabName + '"]').classList.add('active');
+    const tabButton = document.querySelector('[data-tab="' + tabName + '"]');
+    if (tabButton) {
+        tabButton.classList.add('active');
+    }
     
     // Update content sections
     document.querySelectorAll('.tab-content').forEach(content => {

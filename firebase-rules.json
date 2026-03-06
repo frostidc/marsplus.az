@@ -1,0 +1,20 @@
+{
+  "rules": {
+    ".read": true,
+    ".write": "auth != null",
+    "classes": {
+      "$class": {
+        "modules": {
+          "$module": {
+            "questions": {
+              "$question": {
+                ".write": "auth != null",
+                ".validate": "newData.hasChildren(['questionNum', 'questionText', 'answerType'])"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

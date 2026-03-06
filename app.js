@@ -58,26 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ================================
-// Secret Admin Access (Press 'A' twice quickly)
+// Secret Admin Access
 // ================================
-let lastKeyTime = 0;
-const SECRET_CODE = 'admin.az';
-let secretInput = '';
 
-document.addEventListener('keydown', (e) => {
-    const currentTime = new Date().getTime();
-    
-    // If pressed within 500ms of last key, check for double tap
-    if (currentTime - lastKeyTime < 500) {
-        // Double key press detected - show secret admin access
-        if (e.key === 'a' || e.key === 'A') {
-            promptAdminPassword();
-        }
-    }
-    lastKeyTime = currentTime;
-});
-
-// Also check logo click - triple click
+// Method 1: Logo triple click
 let clickCount = 0;
 let clickTimer = null;
 
@@ -93,9 +77,30 @@ document.querySelector('.nav-logo').addEventListener('click', () => {
     }, 500);
 });
 
+// Method 2: Press 'M' + 'A' keys together (or M then A)
+let keySequence = [];
+const secretKeys = ['m', 'a'];
+
+document.addEventListener('keydown', (e) => {
+    keySequence.push(e.key.toLowerCase());
+    if (keySequence.length > 5) keySequence.shift();
+    
+    // Check if user typed 'ma' or 'mars'
+    const lastKeys = keySequence.join('');
+    if (lastKeys.includes('ma')) {
+        promptAdminPassword();
+        keySequence = [];
+    }
+});
+
+// Method 3: Console command (for developers)
+window.openAdminPanel = function() {
+    promptAdminPassword();
+};
+
 function promptAdminPassword() {
     const password = prompt('Admin parolu:');
-    if (password === SECRET_CODE) {
+    if (password === 'admin.az') {
         switchTab('admin');
     } else if (password !== null) {
         alert('Yanlış parol!');

@@ -58,6 +58,51 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ================================
+// Secret Admin Access (Press 'A' twice quickly)
+// ================================
+let lastKeyTime = 0;
+const SECRET_CODE = 'admin.az';
+let secretInput = '';
+
+document.addEventListener('keydown', (e) => {
+    const currentTime = new Date().getTime();
+    
+    // If pressed within 500ms of last key, check for double tap
+    if (currentTime - lastKeyTime < 500) {
+        // Double key press detected - show secret admin access
+        if (e.key === 'a' || e.key === 'A') {
+            promptAdminPassword();
+        }
+    }
+    lastKeyTime = currentTime;
+});
+
+// Also check logo click - triple click
+let clickCount = 0;
+let clickTimer = null;
+
+document.querySelector('.nav-logo').addEventListener('click', () => {
+    clickCount++;
+    if (clickCount === 3) {
+        promptAdminPassword();
+        clickCount = 0;
+    }
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(() => {
+        clickCount = 0;
+    }, 500);
+});
+
+function promptAdminPassword() {
+    const password = prompt('Admin parolu:');
+    if (password === SECRET_CODE) {
+        switchTab('admin');
+    } else if (password !== null) {
+        alert('Yanlış parol!');
+    }
+}
+
+// ================================
 // Tab Navigation
 // ================================
 function switchTab(tabName) {
@@ -327,48 +372,42 @@ function copyCode(btn) {
 // ================================
 // Admin Authentication
 // ================================
+const ADMIN_PASSWORD = 'admin.az';
+let isAdminLoggedIn = false;
+
 function checkAuthState() {
-    firebase.auth().onAuthStateChanged((user) => {
-        currentUser = user;
-        
-        if (user) {
-            showAdminDashboard();
-        } else {
-            showAdminLogin();
-        }
-    });
+    // Check localStorage for admin session
+    if (localStorage.getItem('adminSession') === 'true') {
+        isAdminLoggedIn = true;
+        showAdminDashboard();
+    } else {
+        showAdminLogin();
+    }
 }
 
 function adminLogin() {
-    const email = document.getElementById('admin-email').value;
     const password = document.getElementById('admin-password').value;
     const errorElement = document.getElementById('login-error');
     
-    if (!email || !password) {
-        errorElement.textContent = 'Zəhmət olmasa, email və şifrə daxil edin';
+    if (!password) {
+        errorElement.textContent = 'Zəhmət olmasa, parol daxil edin';
         return;
     }
     
-    firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            currentUser = userCredential.user;
-            errorElement.textContent = '';
-        })
-        .catch((error) => {
-            console.error('Login error:', error);
-            errorElement.textContent = 'Email və ya şifrə yanlışdır';
-        });
+    if (password === ADMIN_PASSWORD) {
+        isAdminLoggedIn = true;
+        localStorage.setItem('adminSession', 'true');
+        errorElement.textContent = '';
+        showAdminDashboard();
+    } else {
+        errorElement.textContent = 'Parol yanlışdır';
+    }
 }
 
 function adminLogout() {
-    firebase.auth().signOut()
-        .then(() => {
-            currentUser = null;
-            showAdminLogin();
-        })
-        .catch((error) => {
-            console.error('Logout error:', error);
-        });
+    isAdminLoggedIn = false;
+    localStorage.removeItem('adminSession');
+    showAdminLogin();
 }
 
 function showAdminLogin() {

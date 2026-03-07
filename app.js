@@ -55,6 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Check auth state
     checkAuthState();
+    
+    // Check for shared KSQ
+    checkForSharedKSQ();
 });
 
 // ================================
@@ -660,6 +663,376 @@ function clearAdminForm() {
     document.getElementById('admin-answer-link').value = '';
     document.getElementById('admin-note').value = '';
     toggleAnswerFields();
+}
+
+// ==============================
+// KSQ - Kütləvi Sual Qeydiyyatı
+// ==============================
+let ksqQuestionCount = 0;
+
+function showKSQForm() {
+    document.getElementById('ksq-form').style.display = 'block';
+    document.querySelector('.ksq-section').style.display = 'none';
+    // İlk 3 soru alanı ekle
+    ksqQuestionCount = 0;
+    document.getElementById('ksq-questions-container').innerHTML = '';
+    addKSQQuestionField();
+    addKSQQuestionField();
+    addKSQQuestionField();
+}
+
+function hideKSQForm() {
+    document.getElementById('ksq-form').style.display = 'none';
+    document.querySelector('.ksq-section').style.display = 'block';
+    ksqQuestionCount = 0;
+}
+
+function updateKSQModuleOptions() {
+    const moduleSelect = document.getElementById('ksq-module');
+    moduleSelect.innerHTML = '<option value="">-- Modul seç --</option>' +
+        '<option value="1">Modul 1</option>' +
+        '<option value="2">Modul 2</option>' +
+        '<option value="3">Modul 3</option>' +
+        '<option value="4">Modul 4</option>' +
+        '<option value="5">Modul 5</option>' +
+        '<option value="6">Modul 6</option>';
+}
+
+function addKSQQuestionField() {
+    ksqQuestionCount++;
+    const container = document.getElementById('ksq-questions-container');
+    const startNum = parseInt(document.getElementById('ksq-start-num').value) || 1;
+    const questionNum = startNum + ksqQuestionCount - 1;
+    
+    const questionHTML = `
+        <div class="ksq-question-card" id="ksq-question-${ksqQuestionCount}">
+            <div class="ksq-question-header">
+                <span class="ksq-question-num">Sual №${questionNum}</span>
+                <button type="button" class="ksq-remove-btn" onclick="removeKSQQuestion(${ksqQuestionCount})">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="form-group">
+                <label>Sual (Mətn):</label>
+                <textarea id="ksq-question-text-${ksqQuestionCount}" class="admin-textarea" 
+                    rows="2" placeholder="Sualın mətni..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Cavab Növü:</label>
+                <select id="ksq-answer-type-${ksqQuestionCount}" class="admin-input" 
+                    onchange="toggleKSQAnswerFields(${ksqQuestionCount})">
+                    <option value="text">Mətn</option>
+                    <option value="code">Kod (Python)</option>
+                    <option value="image">Şəkil</option>
+                    <option value="video">Video</option>
+                    <option value="link">Link</option>
+                </select>
+            </div>
+            <div class="form-group ksq-answer-group" id="ksq-text-answer-${ksqQuestionCount}">
+                <label>Cavab (Mətn):</label>
+                <textarea id="ksq-answer-text-${ksqQuestionCount}" class="admin-textarea" 
+                    rows="3" placeholder="Cavabın mətni..."></textarea>
+            </div>
+            <div class="form-group ksq-answer-group" id="ksq-code-answer-${ksqQuestionCount}" style="display:none;">
+                <label>Cavab (Kod):</label>
+                <textarea id="ksq-answer-code-${ksqQuestionCount}" class="admin-textarea code-input" 
+                    rows="5" placeholder="Python kodu..."></textarea>
+            </div>
+            <div class="form-group ksq-answer-group" id="ksq-media-answer-${ksqQuestionCount}" style="display:none;">
+                <label>Media URL:</label>
+                <input type="url" id="ksq-answer-media-${ksqQuestionCount}" 
+                    class="admin-input" placeholder="Şəkil/Video URL">
+            </div>
+            <div class="form-group ksq-answer-group" id="ksq-link-answer-${ksqQuestionCount}" style="display:none;">
+                <label>Link:</label>
+                <input type="url" id="ksq-answer-link-${ksqQuestionCount}" 
+                    class="admin-input" placeholder="https://...">
+            </div>
+        </div>
+    `;
+    container.insertAdjacentHTML('beforeend', questionHTML);
+}
+
+function removeKSQQuestion(id) {
+    const element = document.getElementById('ksq-question-' + id);
+    if (element) {
+        element.remove();
+    }
+}
+
+function toggleKSQAnswerFields(questionId) {
+    const answerType = document.getElementById('ksq-answer-type-' + questionId).value;
+    
+    // Hide all answer fields first
+    document.querySelectorAll('#ksq-question-' + questionId + ' .ksq-answer-group').forEach(el => {
+        el.style.display = 'none';
+    });
+    
+    // Show selected answer field
+    switch(answerType) {
+        case 'text':
+            document.getElementById('ksq-text-answer-' + questionId).style.display = 'block';
+            break;
+        case 'code':
+            document.getElementById('ksq-code-answer-' + questionId).style.display = 'block';
+            break;
+        case 'image':
+        case 'video':
+            document.getElementById('ksq-media-answer-' + questionId).style.display = 'block';
+            break;
+        case 'link':
+            document.getElementById('ksq-link-answer-' + questionId).style.display = 'block';
+            break;
+    }
+}
+
+function saveKSQ() {
+    const classNum = document.getElementById('ksq-class').value;
+    const moduleNum = document.getElementById('ksq-module').value;
+    const startNum = parseInt(document.getElementById('ksq-start-num').value) || 1;
+    
+    if (!classNum || !moduleNum) {
+        alert('Zəhmət olmasa, sinif və modul seçin');
+        return;
+    }
+    
+    // Soruları topla
+    const questions = [];
+    const questionCards = document.querySelectorAll('.ksq-question-card');
+    
+    questionCards.forEach((card, index) => {
+        const id = card.id.replace('ksq-question-', '');
+        const questionText = document.getElementById('ksq-question-text-' + id).value;
+        const answerType = document.getElementById('ksq-answer-type-' + id).value;
+        
+        if (questionText.trim()) {
+            const questionData = {
+                class: classNum,
+                module: moduleNum,
+                questionNum: startNum + index,
+                questionText: questionText,
+                answerType: answerType,
+                answerText: answerType === 'text' ? document.getElementById('ksq-answer-text-' + id).value : null,
+                answerCode: answerType === 'code' ? document.getElementById('ksq-answer-code-' + id).value : null,
+                answerMedia: (answerType === 'image' || answerType === 'video') ? document.getElementById('ksq-answer-media-' + id).value : null,
+                answerLink: answerType === 'link' ? document.getElementById('ksq-answer-link-' + id).value : null,
+                updatedAt: new Date().toISOString()
+            };
+            questions.push(questionData);
+        }
+    });
+    
+    if (questions.length === 0) {
+        alert('Zəhmət olmasa, ən azı bir sual daxil edin');
+        return;
+    }
+    
+    // Firebase'e kaydet
+    const saves = questions.map(q => {
+        const questionRef = firebase.database().ref('classes/' + classNum + '/modules/' + moduleNum + '/questions/' + q.questionNum);
+        return questionRef.set(q);
+    });
+    
+    Promise.all(saves)
+        .then(() => {
+            alert('Sualar uğurla yadda saxlanıldı! (' + questions.length + ' sual)');
+            hideKSQForm();
+            loadAdminQuestions();
+        })
+        .catch((error) => {
+            console.error('Error saving KSQ:', error);
+            alert('Xəta baş verdi. Yenidən cəhd edin.');
+        });
+}
+
+// ==============================
+// KSQ - View All Answers Together
+// ==============================
+function viewKSQAnswers(classNum, moduleNum, questionNums) {
+    const questionsRef = firebase.database().ref('classes/' + classNum + '/modules/' + moduleNum + '/questions');
+    
+    questionsRef.once('value')
+        .then((snapshot) => {
+            const data = snapshot.val();
+            const questions = [];
+            
+            if (data) {
+                questionNums.forEach(num => {
+                    if (data[num]) {
+                        questions.push({ id: num, ...data[num] });
+                    }
+                });
+            }
+            
+            if (questions.length === 0) {
+                alert('Sualar tapılmadı');
+                return;
+            }
+            
+            displayKSQAnswers(questions, classNum, moduleNum);
+        })
+        .catch((error) => {
+            console.error('Error loading KSQ answers:', error);
+            alert('Xəta baş verdi');
+        });
+}
+
+function displayKSQAnswers(questions, classNum, moduleNum) {
+    const questionsContainer = document.getElementById('questions-container');
+    const answerContainer = document.getElementById('answer-container');
+    
+    // İstatistikleri hesapla
+    const stats = { text: 0, code: 0, image: 0, video: 0, link: 0 };
+    questions.forEach(q => {
+        if (q.answerType && stats.hasOwnProperty(q.answerType)) {
+            stats[q.answerType]++;
+        }
+    });
+    
+    let statsText = '';
+    if (stats.image > 0) statsText += stats.image + ' şəkil, ';
+    if (stats.video > 0) statsText += stats.video + ' video, ';
+    if (stats.code > 0) statsText += stats.code + ' kod, ';
+    if (stats.link > 0) statsText += stats.link + ' link, ';
+    if (stats.text > 0) statsText += stats.text + ' mətn, ';
+    statsText = statsText.replace(/, $/, '');
+    
+    let answersHTML = `
+        <div class="ksq-answers-header">
+            <button class="back-btn" onclick="hideKSQAnswers()">
+                <i class="fas fa-arrow-left"></i> Geri
+            </button>
+            <div class="ksq-answers-info">
+                <h2>${classNum}-ci sinif - Modul ${moduleNum}</h2>
+                <p class="ksq-answers-stats">${statsText}</p>
+            </div>
+            <button class="admin-btn share-ksq-btn" onclick="shareKSQ('${classNum}', '${moduleNum}', [${questions.map(q => q.questionNum).join(',')}])">
+                <i class="fas fa-share-alt"></i> Paylaş
+            </button>
+        </div>
+    `;
+    
+    questions.sort((a, b) => (a.questionNum || 0) - (b.questionNum || 0));
+    
+    questions.forEach(q => {
+        answersHTML += `
+            <div class="ksq-answer-card">
+                <div class="ksq-answer-question-header">
+                    <span class="ksq-question-number">Sual №${q.questionNum}</span>
+                    <span class="answer-type-badge">${getAnswerTypeLabel(q.answerType)}</span>
+                </div>
+                <p class="ksq-question-text">${escapeHtml(q.questionText || '')}</p>
+                <div class="ksq-answer-content">
+        `;
+        
+        // Answer content based on type
+        switch (q.answerType) {
+            case 'text':
+                answersHTML += `<p class="answer-text">${escapeHtml(q.answerText || 'Cavab yoxdur')}</p>`;
+                break;
+            case 'code':
+                const codeContent = q.answerCode || '';
+                answersHTML += `
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">
+                            <i class="fas fa-copy"></i> Kopya
+                        </button>
+                        <pre><code>${escapeHtml(codeContent)}</code></pre>
+                    </div>
+                `;
+                break;
+            case 'image':
+                answersHTML += `<img src="${q.answerMedia || ''}" alt="Cavab şəkili" class="answer-media">`;
+                break;
+            case 'video':
+                answersHTML += `
+                    <video controls class="answer-video">
+                        <source src="${q.answerMedia || ''}" type="video/mp4">
+                        Video dəstəklənmir
+                    </video>
+                `;
+                break;
+            case 'link':
+                answersHTML += `
+                    <a href="${q.answerLink || '#'}" target="_blank" class="answer-link">
+                        <i class="fas fa-external-link-alt"></i> ${q.answerLink || 'Link'}
+                    </a>
+                `;
+                break;
+            default:
+                answersHTML += '<p class="answer-text">Cavab hələ əlavə edilməyib</p>';
+        }
+        
+        answersHTML += '</div></div>';
+    });
+    
+    document.getElementById('answer-content').innerHTML = answersHTML;
+    questionsContainer.style.display = 'none';
+    answerContainer.style.display = 'block';
+}
+
+function hideKSQAnswers() {
+    document.getElementById('answer-container').style.display = 'none';
+    document.getElementById('questions-container').style.display = 'block';
+    loadQuestionsFromFirebase();
+}
+
+// ==============================
+// KSQ - Share Functionality
+// ==============================
+function shareKSQ(classNum, moduleNum, questionNums) {
+    // Create a unique share ID
+    const shareId = Date.now().toString(36) + Math.random().toString(36).substr(2);
+    
+    // Save share data to Firebase
+    const shareRef = firebase.database().ref('shared/ksq/' + shareId);
+    
+    shareRef.set({
+        class: classNum,
+        module: moduleNum,
+        questions: questionNums,
+        createdAt: new Date().toISOString()
+    })
+    .then(() => {
+        // Create shareable URL
+        const baseUrl = window.location.origin + window.location.pathname;
+        const shareUrl = `${baseUrl}?ksq=${shareId}`;
+        
+        // Copy to clipboard
+        navigator.clipboard.writeText(shareUrl).then(() => {
+            alert('Paylaşım linki kopyalandı!:\n' + shareUrl);
+        }).catch(() => {
+            // Fallback: show the URL in a prompt
+            prompt('Paylaşım linki:', shareUrl);
+        });
+    })
+    .catch((error) => {
+        console.error('Error creating share:', error);
+        alert('Paylaşım xətası baş verdi');
+    });
+}
+
+// Check for shared KSQ on page load
+function checkForSharedKSQ() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const ksqShare = urlParams.get('ksq');
+    
+    if (ksqShare) {
+        const shareRef = firebase.database().ref('shared/ksq/' + ksqShare);
+        
+        shareRef.once('value')
+            .then((snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    viewKSQAnswers(data.class, data.module, data.questions);
+                    // Clean URL
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+            })
+            .catch((error) => {
+                console.error('Error loading shared KSQ:', error);
+            });
+    }
 }
 
 function loadAdminQuestions() {

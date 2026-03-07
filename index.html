@@ -1,24 +1,38 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
+    <!-- AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7588730976222194"
      crossorigin="anonymous"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mars Algoritmika</title>
+
+    <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Entrance Animation Overlay -->
+
+    <!-- ══════════════════════════════════════════
+         ENTRANCE ANIMATION OVERLAY
+    ══════════════════════════════════════════ -->
     <div id="entrance-overlay">
         <div class="galactic-text" id="galactic-text"></div>
+        <div class="entrance-bar"></div>
     </div>
 
-    <!-- Navigation -->
+    <!-- ══════════════════════════════════════════
+         NAVIGATION
+    ══════════════════════════════════════════ -->
     <nav class="main-nav">
         <div class="nav-logo">
             <span class="logo-icon">🪐</span>
@@ -40,26 +54,34 @@
         </div>
     </nav>
 
-    <!-- Reklam Banner -->
+    <!-- ══════════════════════════════════════════
+         AD BANNER (üst — Marsad)
+    ══════════════════════════════════════════ -->
     <div class="ad-banner" id="ad-banner">
         <div class="ad-container">
-            <!-- AdFocus Banner - Replace with your banner code -->
-            <a href="https://adfoc.us/8753751" target="_blank">
-                <img src="https://via.placeholder.com/728x90/1a1a2e/ff6b6b?text=Reklam+Buraya" alt="Reklam" style="max-width:100%; height:auto;">
-            </a>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-7588730976222194"
+                 data-ad-slot="1989024307"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
     </div>
 
-    <!-- Main Content -->
+    <!-- ══════════════════════════════════════════
+         MAIN CONTENT
+    ══════════════════════════════════════════ -->
     <main id="main-content">
-        <!-- Home Section -->
+
+        <!-- ── HOME ── -->
         <section id="home-section" class="tab-content active">
             <div class="hero-section">
                 <h1 class="hero-title">Mars Algoritmika</h1>
                 <p class="hero-subtitle">Algoritmik düşüncəni inkişaf etdir</p>
             </div>
 
-            <!-- Class Selection -->
+            <!-- Sinif seçimi -->
             <div class="class-selection">
                 <label for="class-select" class="section-label">Sinifini seç:</label>
                 <select id="class-select" class="class-dropdown" onchange="loadModules()">
@@ -72,8 +94,8 @@
                 </select>
             </div>
 
-            <!-- Module Selection -->
-            <div class="module-selection" id="module-selection" style="display: none;">
+            <!-- Modul seçimi -->
+            <div class="module-selection" id="module-selection" style="display:none;">
                 <label for="module-select" class="section-label">Modulu seç:</label>
                 <select id="module-select" class="module-dropdown" onchange="loadQuestions()">
                     <option value="">-- Modul seç --</option>
@@ -86,24 +108,28 @@
                 </select>
             </div>
 
-            <!-- Search Bar -->
-            <div class="search-section" id="search-section" style="display: none;">
+            <!-- Axtarış -->
+            <div class="search-section" id="search-section" style="display:none;">
                 <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="search-input" class="search-input" 
-                           placeholder="Sual № və ya açar sözlə axtar..." 
+                    <input type="text" id="search-input" class="search-input"
+                           placeholder="Sual № və ya açar sözlə axtar..."
                            oninput="searchQuestions()">
+                    <i class="fas fa-search search-icon"></i>
                 </div>
             </div>
 
-            <!-- Questions List -->
-            <div class="questions-container" id="questions-container" style="display: none;">
+            <!-- Suallar siyahısı -->
+            <div class="questions-container" id="questions-container" style="display:none;">
                 <h2 class="section-title">Suallar</h2>
+
+                <!-- Pulsuz sayaç chip -->
+                <div id="mars-free-chip" class="mars-free-chip" style="display:none;"></div>
+
                 <div id="questions-list" class="questions-list"></div>
             </div>
 
-            <!-- Answer Display -->
-            <div class="answer-container" id="answer-container" style="display: none;">
+            <!-- Cavab göstəricisi -->
+            <div class="answer-container" id="answer-container" style="display:none;">
                 <button class="back-btn" onclick="hideAnswer()">
                     <i class="fas fa-arrow-left"></i> Geri
                 </button>
@@ -111,7 +137,7 @@
             </div>
         </section>
 
-        <!-- Mars+ Section -->
+        <!-- ── MARS+ ── -->
         <section id="mars-plus-section" class="tab-content">
             <div class="coming-soon">
                 <div class="coming-soon-icon">🚀</div>
@@ -121,13 +147,16 @@
             </div>
         </section>
 
-        <!-- Share Section -->
+        <!-- ── PAYLAŞ ── -->
         <section id="share-section" class="tab-content">
             <div class="share-container">
                 <h2 class="section-title">Sual və ya Cavab Paylaş</h2>
-                <p class="share-description">Öz sualını və ya cavabını bizimlə paylaşmaq üçün aşağıdakı formaya keçid edin:</p>
-                <a href="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform" 
-                   target="_blank" 
+                <p class="share-description">
+                    Öz sualını və ya cavabını bizimlə paylaşmaq üçün aşağıdakı formaya keçid edin:
+                </p>
+                <a href="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform"
+                   target="_blank"
+                   rel="noopener"
                    class="share-link-btn">
                     <i class="fas fa-external-link-alt"></i> Formaya keçid
                 </a>
@@ -142,15 +171,16 @@
             </div>
         </section>
 
-        <!-- Admin Section -->
+        <!-- ── ADMIN ── -->
         <section id="admin-section" class="tab-content">
             <div class="admin-container">
                 <h2 class="section-title">Admin Panel</h2>
-                
-                <!-- Login Form -->
+
+                <!-- Giriş formu -->
                 <div id="admin-login" class="admin-login">
                     <div class="login-form">
-                        <input type="password" id="admin-password" placeholder="Parol" class="admin-input">
+                        <input type="password" id="admin-password"
+                               placeholder="Parol" class="admin-input">
                         <button onclick="adminLogin()" class="admin-btn">
                             <i class="fas fa-sign-in-alt"></i> Daxil ol
                         </button>
@@ -158,8 +188,8 @@
                     <p id="login-error" class="error-message"></p>
                 </div>
 
-                <!-- Admin Dashboard -->
-                <div id="admin-dashboard" class="admin-dashboard" style="display: none;">
+                <!-- Admin dashboard -->
+                <div id="admin-dashboard" class="admin-dashboard" style="display:none;">
                     <div class="admin-header">
                         <button onclick="adminLogout()" class="admin-btn logout-btn">
                             <i class="fas fa-sign-out-alt"></i> Çıxış
@@ -169,9 +199,10 @@
                         </button>
                     </div>
 
-                    <!-- Add/Edit Question Form -->
+                    <!-- Sual/Cavab əlavə et -->
                     <div class="admin-form-section">
-                        <h3>Sual/Cavab Əlavə et</h3>
+                        <h3><i class="fas fa-plus-circle"></i> Sual / Cavab Əlavə et</h3>
+
                         <div class="form-group">
                             <label>Sinif:</label>
                             <select id="admin-class" class="admin-input">
@@ -182,6 +213,7 @@
                                 <option value="11">11-ci sinif</option>
                             </select>
                         </div>
+
                         <div class="form-group">
                             <label>Modul:</label>
                             <select id="admin-module" class="admin-input">
@@ -193,17 +225,23 @@
                                 <option value="6">Modul 6</option>
                             </select>
                         </div>
+
                         <div class="form-group">
                             <label>Sual №:</label>
-                            <input type="number" id="admin-question-num" class="admin-input" placeholder="Məs: 5">
+                            <input type="number" id="admin-question-num"
+                                   class="admin-input" placeholder="Məs: 5">
                         </div>
+
                         <div class="form-group">
                             <label>Sual (Mətn):</label>
-                            <textarea id="admin-question-text" class="admin-textarea" rows="3" placeholder="Sualın mətni..."></textarea>
+                            <textarea id="admin-question-text" class="admin-textarea"
+                                      rows="3" placeholder="Sualın mətni..."></textarea>
                         </div>
+
                         <div class="form-group">
                             <label>Cavab Növü:</label>
-                            <select id="admin-answer-type" class="admin-input" onchange="toggleAnswerFields()">
+                            <select id="admin-answer-type" class="admin-input"
+                                    onchange="toggleAnswerFields()">
                                 <option value="text">Mətn</option>
                                 <option value="code">Kod (Python)</option>
                                 <option value="image">Şəkil</option>
@@ -211,36 +249,49 @@
                                 <option value="link">Link</option>
                             </select>
                         </div>
+
                         <div class="form-group" id="text-answer-group">
                             <label>Cavab (Mətn):</label>
-                            <textarea id="admin-answer-text" class="admin-textarea" rows="4" placeholder="Cavabın mətni..."></textarea>
+                            <textarea id="admin-answer-text" class="admin-textarea"
+                                      rows="4" placeholder="Cavabın mətni..."></textarea>
                         </div>
-                        <div class="form-group" id="code-answer-group" style="display: none;">
+
+                        <div class="form-group" id="code-answer-group" style="display:none;">
                             <label>Cavab (Kod):</label>
-                            <textarea id="admin-answer-code" class="admin-textarea code-input" rows="6" placeholder="Python kodu..."></textarea>
+                            <textarea id="admin-answer-code"
+                                      class="admin-textarea code-input"
+                                      rows="6" placeholder="Python kodu..."></textarea>
                         </div>
-                        <div class="form-group" id="media-answer-group" style="display: none;">
+
+                        <div class="form-group" id="media-answer-group" style="display:none;">
                             <label>Media URL:</label>
-                            <input type="url" id="admin-answer-media" class="admin-input" placeholder="Şəkil/Video URL">
+                            <input type="url" id="admin-answer-media"
+                                   class="admin-input" placeholder="Şəkil/Video URL">
                         </div>
-                        <div class="form-group" id="link-answer-group" style="display: none;">
+
+                        <div class="form-group" id="link-answer-group" style="display:none;">
                             <label>Link:</label>
-                            <input type="url" id="admin-answer-link" class="admin-input" placeholder="https://...">
+                            <input type="url" id="admin-answer-link"
+                                   class="admin-input" placeholder="https://...">
                         </div>
+
                         <div class="form-group">
-                            <label>Admin Qeyd (isteğe bağlı):</label>
-                            <input type="text" id="admin-note" class="admin-input" placeholder="Daxili qeyd">
+                            <label>Admin Qeyd (istəyə bağlı):</label>
+                            <input type="text" id="admin-note"
+                                   class="admin-input" placeholder="Daxili qeyd">
                         </div>
+
                         <button onclick="saveQuestion()" class="admin-btn save-btn">
                             <i class="fas fa-save"></i> Yadda saxla
                         </button>
                     </div>
 
-                    <!-- Questions List -->
+                    <!-- Mövcud suallar -->
                     <div class="admin-questions-section">
-                        <h3>Mövcud Suallar</h3>
+                        <h3><i class="fas fa-list"></i> Mövcud Suallar</h3>
                         <div class="admin-filters">
-                            <select id="admin-filter-class" class="admin-input" onchange="loadAdminQuestions()">
+                            <select id="admin-filter-class" class="admin-input"
+                                    onchange="loadAdminQuestions()">
                                 <option value="">Bütün siniflər</option>
                                 <option value="7">7-ci sinif</option>
                                 <option value="8">8-ci sinif</option>
@@ -257,54 +308,48 @@
                 </div>
             </div>
         </section>
+
     </main>
 
-    <!-- Footer -->
+    <!-- ══════════════════════════════════════════
+         FOOTER
+    ══════════════════════════════════════════ -->
     <footer class="main-footer">
-        <p>&copy; 2024 Mars Algoritmika. Bütün hüquqlar qorunur.</p>
+        <p>&copy; 2025 Mars Algoritmika. Bütün hüquqlar qorunur.</p>
     </footer>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
-    
-    <!-- App Scripts -->
-    <script src="firebase-config.js"></script>
-    <script src="app.js"></script>
-
-    <!-- AdFocus Script - Replace with your actual code -->
-    <script src="//adfoc.us/serve/script/8753751.js"></script>
-
-    <!-- Login Modal -->
+    <!-- ══════════════════════════════════════════
+         LOGIN MODAL
+    ══════════════════════════════════════════ -->
     <div id="login-modal" class="login-modal">
         <div class="login-modal-content">
             <span class="login-close" onclick="closeLoginModal()">&times;</span>
+
             <div class="login-header">
                 <div class="login-icon">🔐</div>
                 <h2>Daxil ol / Qeydiyyat</h2>
                 <p>Emailinizi daxil edin və sistemə qoşulun</p>
             </div>
-            
-            <!-- Step 1: Email Input -->
+
+            <!-- Addım 1: Email -->
             <div id="login-step-1" class="login-step">
                 <div class="form-group">
                     <label for="user-email">Email ünvanı:</label>
-                    <input type="email" id="user-email" class="login-input" 
+                    <input type="email" id="user-email" class="login-input"
                            placeholder="nümunə@gmail.com" required>
                 </div>
                 <button onclick="sendLoginLink()" class="login-btn" id="send-link-btn">
                     <i class="fas fa-paper-plane"></i> Daxil olma linki göndər
                 </button>
-                <p class="login-info">
+                <div class="login-info">
                     <i class="fas fa-info-circle"></i>
-                    Emailinize daxil olma linki göndəriləcək. Linkə klik edərək avtomatik daxil olacaqsınız.
-                </p>
+                    Emailinizə daxil olma linki göndəriləcək.
+                    Linkə klik edərək avtomatik daxil olacaqsınız.
+                </div>
             </div>
-            
-            <!-- Step 2: Success Message -->
-            <div id="login-step-2" class="login-step" style="display: none;">
+
+            <!-- Addım 2: Uğur -->
+            <div id="login-step-2" class="login-step" style="display:none;">
                 <div class="login-success">
                     <i class="fas fa-check-circle"></i>
                     <h3>Link göndərildi!</h3>
@@ -314,19 +359,32 @@
                     </button>
                 </div>
             </div>
-            
-            <!-- Error Message -->
-            <div id="login-error" class="login-error" style="display: none;">
+
+            <!-- Xəta -->
+            <div id="login-error" class="login-error" style="display:none;">
                 <i class="fas fa-exclamation-circle"></i>
                 <span id="login-error-text"></span>
             </div>
-            
-            <!-- Loading Spinner -->
-            <div id="login-loading" class="login-loading" style="display: none;">
+
+            <!-- Yükləmə -->
+            <div id="login-loading" class="login-loading" style="display:none;">
                 <div class="spinner"></div>
                 <p>Gözləyin...</p>
             </div>
         </div>
     </div>
+
+    <!-- ══════════════════════════════════════════
+         FIREBASE SDK
+    ══════════════════════════════════════════ -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+
+    <!-- App scripts -->
+    <script src="firebase-config.js"></script>
+    <script src="app.js"></script>
+
 </body>
 </html>

@@ -199,6 +199,58 @@
                         </button>
                     </div>
 
+                    <!-- KSQ - Kütləvi Sual Qeydiyyatı -->
+                    <div class="admin-form-section ksq-section">
+                        <h3><i class="fas fa-layer-group"></i> KSQ (Kütləvi Sual Qeydiyyatı)</h3>
+                        <p class="ksq-description">Bir neçə sualı eyni anda əlavə edin və hamısının cavablarını bir yerdə görün</p>
+                        <button onclick="showKSQForm()" class="admin-btn ksq-btn">
+                            <i class="fas fa-plus-square"></i> KSQ İcra Et
+                        </button>
+                    </div>
+
+                    <!-- KSQ Form (Hidden by default) -->
+                    <div id="ksq-form" class="ksq-form" style="display:none;">
+                        <div class="ksq-header-form">
+                            <div class="form-group">
+                                <label>Sinif:</label>
+                                <select id="ksq-class" class="admin-input" onchange="updateKSQModuleOptions()">
+                                    <option value="">-- Sinif seç --</option>
+                                    <option value="7">7-ci sinif</option>
+                                    <option value="8">8-ci sinif</option>
+                                    <option value="9">9-cu sinif</option>
+                                    <option value="10">10-cu sinif</option>
+                                    <option value="11">11-ci sinif</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Modul:</label>
+                                <select id="ksq-module" class="admin-input">
+                                    <option value="">-- Modul seç --</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Başlanğıc Sual №:</label>
+                                <input type="number" id="ksq-start-num" class="admin-input" placeholder="Məs: 1" value="1">
+                            </div>
+                        </div>
+
+                        <div id="ksq-questions-container" class="ksq-questions-container">
+                            <!-- Sorular buraya dinamik olarak eklenecek -->
+                        </div>
+
+                        <div class="ksq-actions">
+                            <button onclick="addKSQQuestionField()" class="admin-btn add-question-btn">
+                                <i class="fas fa-plus"></i> Sual Əlavə Et
+                            </button>
+                            <button onclick="saveKSQ()" class="admin-btn save-ksq-btn">
+                                <i class="fas fa-save"></i> Hamısını Yadda Saxla
+                            </button>
+                            <button onclick="hideKSQForm()" class="admin-btn cancel-btn">
+                                <i class="fas fa-times"></i> Ləğv Et
+                            </button>
+                        </div>
+                    </div>
+
                     <!-- Sual/Cavab əlavə et -->
                     <div class="admin-form-section">
                         <h3><i class="fas fa-plus-circle"></i> Sual / Cavab Əlavə et</h3>
